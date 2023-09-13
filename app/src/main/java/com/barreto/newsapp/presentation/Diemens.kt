@@ -7,4 +7,5 @@ object Diemens {
     val MediumPadding2 = 30.dp
 
     val IndicatorSize = 14.dp
+    val PageIndicatorWidth = 52.dp
 }
