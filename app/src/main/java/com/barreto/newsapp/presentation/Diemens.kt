@@ -8,4 +8,11 @@ object Diemens {
 
     val IndicatorSize = 14.dp
     val PageIndicatorWidth = 52.dp
+
+    val ArticleCardSize = 96.dp
+    val ExtraSmmalPadding = 3.dp
+    val ExtraSmmalPadding2 = 6.dp
+    val SmallIconSize = 11.dp
+
+    val IconSize = 20.dp
 }

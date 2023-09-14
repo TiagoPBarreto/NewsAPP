@@ -6,15 +6,24 @@ import com.barreto.newsapp.data.local.NewsDao
 import com.barreto.newsapp.data.local.NewsDatabase
 import com.barreto.newsapp.data.local.NewsTypeConverter
 import com.barreto.newsapp.data.manger.LocalUserMangerImpl
+import com.barreto.newsapp.data.remote.NewsApi
+import com.barreto.newsapp.data.repository.NewRepositoryImpl
 import com.barreto.newsapp.domain.manger.LocalUserManger
-import com.barreto.newsapp.domain.usecases.AppEntryUsesCases
-import com.barreto.newsapp.domain.usecases.ReadAppEntry
-import com.barreto.newsapp.domain.usecases.SaveAPPEntry
+import com.barreto.newsapp.domain.repository.NewsRepository
+import com.barreto.newsapp.domain.usecases.app_entry.AppEntryUsesCases
+import com.barreto.newsapp.domain.usecases.app_entry.ReadAppEntry
+import com.barreto.newsapp.domain.usecases.app_entry.SaveAPPEntry
+import com.barreto.newsapp.domain.usecases.news.GetNews
+import com.barreto.newsapp.domain.usecases.news.NewsUseCases
+import com.barreto.newsapp.util.Constants.BASE_URL
 import com.barreto.newsapp.util.Constants.NEWS_DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -55,5 +64,30 @@ object AppModule {
     fun provideNewsDao(
         newsDatabase: NewsDatabase
     ): NewsDao = newsDatabase.newsDao
+
+    @Provides
+    @Singleton
+    fun provideNewsApi(): NewsApi {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(NewsApi::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideNewsRepository(
+        newsApi: NewsApi
+    ):NewsRepository = NewRepositoryImpl(newsApi)
+
+    @Provides
+    @Singleton
+    fun provideNewsUseCase(
+        newsRepository: NewsRepository
+    ): NewsUseCases{
+        return NewsUseCases(
+            getNews = GetNews(newsRepository)
+        )
+    }
 
 }

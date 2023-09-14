@@ -1,4 +1,4 @@
-package com.barreto.newsapp.domain.usecases
+package com.barreto.newsapp.domain.usecases.app_entry
 
 import com.barreto.newsapp.domain.manger.LocalUserManger
 
