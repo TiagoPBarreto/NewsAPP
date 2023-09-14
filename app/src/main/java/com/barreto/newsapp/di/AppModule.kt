@@ -15,6 +15,7 @@ import com.barreto.newsapp.domain.usecases.app_entry.ReadAppEntry
 import com.barreto.newsapp.domain.usecases.app_entry.SaveAPPEntry
 import com.barreto.newsapp.domain.usecases.news.GetNews
 import com.barreto.newsapp.domain.usecases.news.NewsUseCases
+import com.barreto.newsapp.domain.usecases.news.SearchNews
 import com.barreto.newsapp.util.Constants.BASE_URL
 import com.barreto.newsapp.util.Constants.NEWS_DATABASE_NAME
 import dagger.Module
@@ -86,7 +87,8 @@ object AppModule {
         newsRepository: NewsRepository
     ): NewsUseCases{
         return NewsUseCases(
-            getNews = GetNews(newsRepository)
+            getNews = GetNews(newsRepository),
+            searchNews = SearchNews(newsRepository)
         )
     }
 

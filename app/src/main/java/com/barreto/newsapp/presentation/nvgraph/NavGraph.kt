@@ -11,6 +11,8 @@ import com.barreto.newsapp.presentation.home.HomeScreen
 import com.barreto.newsapp.presentation.home.HomeViewModel
 import com.barreto.newsapp.presentation.onboarding.OnBoardingScreen
 import com.barreto.newsapp.presentation.onboarding.OnBoardingViewModel
+import com.barreto.newsapp.presentation.search.SearchScreen
+import com.barreto.newsapp.presentation.search.SearchViewModel
 
 @Composable
 fun NavGraph(
@@ -34,9 +36,8 @@ fun NavGraph(
             startDestination = Route.NewsNavigationScreen.route
         ) {
             composable(route = Route.NewsNavigationScreen.route){
-                val viewModel: HomeViewModel = hiltViewModel()
-                val articles = viewModel.news.collectAsLazyPagingItems()
-                HomeScreen(articles = articles, navigate = {})
+                val viewModel: SearchViewModel = hiltViewModel()
+               SearchScreen(state = viewModel.state.value, event = viewModel::onEvent, navigate = {})
             }
         }
     }
